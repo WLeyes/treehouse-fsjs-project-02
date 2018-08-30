@@ -6,9 +6,6 @@ FSJS project 2 - List Filter and Pagination
 // Add variables that store DOM elements you will need to reference and/or manipulate
 
 
-// Create a function to hide all of the items in the list excpet for the ten you want to show
-// Tip: Keep in mind that with a list of 54 studetns, the last page will only display four
-
 const UICtrl = (() => {
   const UISelectors = {
     studentItem: '.student-item',
@@ -32,6 +29,8 @@ const UICtrl = (() => {
     // used for getting config values
     getConfig: () => UIConfig,
 
+    // Create a function to hide all of the items in the list excpet for the ten you want to show
+    // Tip: Keep in mind that with a list of 54 studetns, the last page will only display four
     showPage: (list, page, recordsPerPage) => {
       for (let i = 0; i < list.length; i++) {
         if (i >= (page * recordsPerPage) - recordsPerPage && i < (page * recordsPerPage)) {
@@ -44,6 +43,7 @@ const UICtrl = (() => {
       }
     },
 
+    // Pagination magic 
     appendPageLinks: (list, currentPage, recordsPerPage) => {
       console.log(list);
       // Get UI selectors
@@ -98,7 +98,7 @@ const UICtrl = (() => {
       });
     },
 
-    search: (searchList, listItem) => {
+    search: (searchList, listItem, currentPage, recordsPerPage) => {
       // Create search bar
       const searchBar = document.createElement('div');
       searchBar.className = 'student-search';
@@ -106,6 +106,7 @@ const UICtrl = (() => {
         <input placeholder="Search for students...">
         <button>Search</button>
       `
+      // the logic to filter out the records to be displayed
       document.querySelector(UISelectors.pageHeader).appendChild(searchBar);
       const search = document.querySelector(UISelectors.searchInput);
       const searchButton = document.querySelector(UISelectors.searchInput);
@@ -114,8 +115,10 @@ const UICtrl = (() => {
         for (let i = 0; i < searchList.length; i++) {
           if (searchList[i].textContent.toLowerCase().includes(e.target.value.toLowerCase())) {
             listItem[i].style.backgroundColor = 'green';
+            listItem[i].style.display = 'block';
           } else {
             listItem[i].style.backgroundColor = 'red';
+            listItem[i].style.display = 'none';
           }
         }
       });
@@ -142,7 +145,7 @@ const App = ((UICtrl) => {
       // method calls
       UICtrl.showPage(list, currentPage, recordsPerPage);
       UICtrl.appendPageLinks(list, currentPage, recordsPerPage);
-      UICtrl.search(searchList, list);
+      UICtrl.search(searchList, list, currentPage, recordsPerPage);
     }
   }
 })(UICtrl);
