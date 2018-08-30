@@ -113,15 +113,21 @@ const UICtrl = (() => {
         e.preventDefault();
         for (let i = 0; i < searchList.length; i++) {
           if (searchList[i].textContent.toLowerCase().includes(e.target.value.toLowerCase())) {
-            listItem[i].style.backgroundColor = 'green';
+            if (listItem[i].classList.contains('hide')) {
+              listItem[i].classList.remove('hide');
+            }
+            listItem[i].classList.add('show');
             listItem[i].style.display = 'block';
           } else {
-            listItem[i].style.backgroundColor = 'red';
+            if (listItem[i].classList.contains('show')) {
+              listItem[i].classList.remove('show');
+            }
+            listItem[i].classList.add('hide');
             listItem[i].style.display = 'none';
           }
         }
-        currentPage = 1;
-        UICtrl.appendPageLinks(listItem, currentPage, recordsPerPage);
+        filtered = document.querySelectorAll(".show");
+        UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
       });
     }
   }
