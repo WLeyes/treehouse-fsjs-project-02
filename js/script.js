@@ -94,7 +94,6 @@ const UICtrl = (() => {
         }
         currentPage = e.target.innerHTML;
         UICtrl.showPage(list, currentPage, recordsPerPage);
-
       });
     },
 
@@ -121,6 +120,8 @@ const UICtrl = (() => {
             listItem[i].style.display = 'none';
           }
         }
+        currentPage = 1;
+        UICtrl.appendPageLinks(listItem, currentPage, recordsPerPage);
       });
     }
   }
