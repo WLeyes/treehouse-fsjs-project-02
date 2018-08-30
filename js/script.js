@@ -98,7 +98,7 @@ const UICtrl = (() => {
       });
     },
 
-    search: searchList => {
+    search: (searchList, listItem) => {
       // Create search bar
       const searchBar = document.createElement('div');
       searchBar.className = 'student-search';
@@ -109,6 +109,16 @@ const UICtrl = (() => {
       document.querySelector(UISelectors.pageHeader).appendChild(searchBar);
       const search = document.querySelector(UISelectors.searchInput);
       const searchButton = document.querySelector(UISelectors.searchInput);
+      search.addEventListener('keyup', e => {
+        e.preventDefault();
+        for (let i = 0; i < searchList.length; i++) {
+          if (searchList[i].textContent.toLowerCase().includes(e.target.value.toLowerCase())) {
+            listItem[i].style.backgroundColor = 'green';
+          } else {
+            listItem[i].style.backgroundColor = 'red';
+          }
+        }
+      });
     }
   }
 })();
@@ -132,7 +142,7 @@ const App = ((UICtrl) => {
       // method calls
       UICtrl.showPage(list, currentPage, recordsPerPage);
       UICtrl.appendPageLinks(list, currentPage, recordsPerPage);
-      UICtrl.search(searchList);
+      UICtrl.search(searchList, list);
     }
   }
 })(UICtrl);
