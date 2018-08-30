@@ -5,7 +5,7 @@ FSJS project 2 - List Filter and Pagination
 
 // Add variables that store DOM elements you will need to reference and/or manipulate
 
-
+// Centralize selectors and vars that can be changed 
 const UICtrl = (() => {
   const UISelectors = {
     studentItem: '.student-item',
