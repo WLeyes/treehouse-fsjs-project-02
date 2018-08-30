@@ -127,6 +127,7 @@ const UICtrl = (() => {
           }
         }
         filtered = document.querySelectorAll(".show");
+        UICtrl.showPage(filtered, currentPage, recordsPerPage);
         UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
       });
     }
