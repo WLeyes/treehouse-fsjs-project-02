@@ -98,7 +98,7 @@ const UICtrl = (() => {
       });
     },
 
-    search: () => {
+    search: searchList => {
       // Create search bar
       const searchBar = document.createElement('div');
       searchBar.className = 'student-search';
@@ -121,15 +121,18 @@ const App = ((UICtrl) => {
       // Get UI selectors
       const UISelectors = UICtrl.getSelectors();
 
+      // lists
       let list = document.querySelectorAll(UISelectors.studentItem);
+      let searchList = document.querySelectorAll(UISelectors.studentName);
 
+      // variables 
       let currentPage = UIConfig.currentPage;
       const recordsPerPage = UIConfig.recordsPerPage;
 
-
+      // method calls
       UICtrl.showPage(list, currentPage, recordsPerPage);
       UICtrl.appendPageLinks(list, currentPage, recordsPerPage);
-      UICtrl.search();
+      UICtrl.search(searchList);
     }
   }
 })(UICtrl);
