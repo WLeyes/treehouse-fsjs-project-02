@@ -152,6 +152,10 @@ const UICtrl = (() => {
             }
             listItem[i].classList.add('show');
             listItem[i].style.display = 'block';
+            let test = searchList[i].textContent.replace(e.target.value.toLowerCase(), `<span class="highlight">${e.target.value.toLowerCase()}</span>`);
+            searchList[i].innerHTML = test;
+            console.log(test);
+
           } else {
             if (listItem[i].classList.contains('show')) {
               listItem[i].classList.remove('show');
