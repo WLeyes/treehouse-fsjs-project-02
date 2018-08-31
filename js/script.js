@@ -74,16 +74,19 @@ const UICtrl = (() => {
 
 
       for (let i = 0; i < pagesNeeded; i++) {
-        let anchor = `<a href="#">${i + 1}</a>`
-        let li = document.createElement('li');
-        li.innerHTML = anchor;
+        if (pagesNeeded > 1) {
+          let anchor = `<a href="#">${i + 1}</a>`
+          let li = document.createElement('li');
+          li.innerHTML = anchor;
 
-        // append each link inside the ul
-        ul.appendChild(li);
-        document.querySelector(UISelectors.paginationLI)
-          .getElementsByTagName('a')[currentPage - 1]
-          .classList.add('active');
+          // append each link inside the ul
+          ul.appendChild(li);
+          document.querySelector(UISelectors.paginationLI)
+            .getElementsByTagName('a')[currentPage - 1]
+            .classList.add('active');
+        }
       }
+
 
       // Event listener for when pagination buttons are clicked
       document.querySelector(UISelectors.paginationLI).addEventListener('click', e => {
