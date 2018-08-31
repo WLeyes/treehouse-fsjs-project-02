@@ -148,40 +148,52 @@ const UICtrl = (() => {
         UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
       });
 
+      // Search button
       search.addEventListener('keyup', e => {
         e.preventDefault();
+        // loop through all list items
         for (let i = 0; i < searchList.length; i++) {
+          // if the value in the input box matches
           if (searchList[i].textContent.toLowerCase().includes(e.target.value.toLowerCase())) {
+            // check if class is already applied
             if (listItem[i].classList.contains('hide')) {
               listItem[i].classList.remove('hide');
             }
+            // display item
             listItem[i].classList.add('show');
             listItem[i].style.display = 'block';
             let highlightLetters = searchList[i].textContent.replace(e.target.value.toLowerCase(), `<span class="highlight">${e.target.value.toLowerCase()}</span>`);
             searchList[i].innerHTML = highlightLetters;
 
           } else {
+            // check if class is already applied
             if (listItem[i].classList.contains('show')) {
               listItem[i].classList.remove('show');
             }
+            // hide item
             listItem[i].classList.add('hide');
             listItem[i].style.display = 'none';
           }
         }
+        // create new list by looping through all items with class of show
         filtered = document.querySelectorAll(".show");
+        // if no records display message
         if (filtered.length === 0) {
           UICtrl.noRecords();
         } else {
+          // check if message exists if so remove once filtered is greater then 0
           if (document.querySelector(UISelectors.noRecords)) {
             document.querySelector(UISelectors.noRecords).remove();
           }
         }
+        // update the displayed results and pagination
         UICtrl.showPage(filtered, currentPage, recordsPerPage);
         UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
       });
     },
 
     noRecords: () => {
+      // the no records object to be displayed pending on the search filter logic
       if (document.querySelector(UISelectors.noRecords)) {
         document.querySelector(UISelectors.noRecords).remove();
       }
@@ -205,15 +217,15 @@ const App = ((UICtrl) => {
       // Get UI selectors
       const UISelectors = UICtrl.getSelectors();
 
-      // lists
+      // initial lists
       let list = document.querySelectorAll(UISelectors.studentItem);
       let searchList = document.querySelectorAll(UISelectors.studentName);
 
-      // variables 
+      // initial variables 
       let currentPage = UIConfig.currentPage;
       const recordsPerPage = UIConfig.recordsPerPage;
 
-      // method calls
+      // initial method calls
       UICtrl.showPage(list, currentPage, recordsPerPage);
       UICtrl.appendPageLinks(list, currentPage, recordsPerPage);
       UICtrl.search(searchList, list, currentPage, recordsPerPage);
