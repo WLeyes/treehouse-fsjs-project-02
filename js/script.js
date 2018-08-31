@@ -9,6 +9,7 @@ FSJS project 2 - List Filter and Pagination
 const UICtrl = (() => {
   const UISelectors = {
     studentItem: '.student-item',
+    studentList: '.student-list',
     studentName: '.student-details h3',
     page: '.page',
     anchor: '.pagination li a',
@@ -16,7 +17,8 @@ const UICtrl = (() => {
     paginationLI: '.pagination ul',
     pageHeader: '.page-header',
     searchInput: '.student-search input',
-    searchButton: '.student-search button'
+    searchButton: '.student-search button',
+    noRecords: '.no-records'
   }
   const UIConfig = {
     recordsPerPage: 10,
@@ -108,7 +110,38 @@ const UICtrl = (() => {
       // the logic to filter out the records to be displayed
       document.querySelector(UISelectors.pageHeader).appendChild(searchBar);
       const search = document.querySelector(UISelectors.searchInput);
-      const searchButton = document.querySelector(UISelectors.searchInput);
+      const searchButton = document.querySelector(UISelectors.searchButton);
+
+      searchButton.addEventListener('click', e => {
+        e.preventDefault();
+        for (let i = 0; i < searchList.length; i++) {
+          let input = document.querySelector(UISelectors.searchInput);
+          if (searchList[i].textContent.toLowerCase().includes(input.value.toLowerCase())) {
+            if (listItem[i].classList.contains('hide')) {
+              listItem[i].classList.remove('hide');
+            }
+            listItem[i].classList.add('show');
+            listItem[i].style.display = 'block';
+          } else {
+            if (listItem[i].classList.contains('show')) {
+              listItem[i].classList.remove('show');
+            }
+            listItem[i].classList.add('hide');
+            listItem[i].style.display = 'none';
+          }
+        }
+        filtered = document.querySelectorAll(".show");
+        if (filtered.length === 0) {
+          UICtrl.noRecords();
+        } else {
+          if (document.querySelector(UISelectors.noRecords)) {
+            document.querySelector(UISelectors.noRecords).remove();
+          }
+        }
+        UICtrl.showPage(filtered, currentPage, recordsPerPage);
+        UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
+      });
+
       search.addEventListener('keyup', e => {
         e.preventDefault();
         for (let i = 0; i < searchList.length; i++) {
@@ -127,9 +160,33 @@ const UICtrl = (() => {
           }
         }
         filtered = document.querySelectorAll(".show");
+        if (filtered.length === 0) {
+          UICtrl.noRecords();
+        } else {
+          if (document.querySelector(UISelectors.noRecords)) {
+            document.querySelector(UISelectors.noRecords).remove();
+          }
+        }
         UICtrl.showPage(filtered, currentPage, recordsPerPage);
         UICtrl.appendPageLinks(filtered, currentPage, recordsPerPage);
       });
+    },
+
+    noRecords: () => {
+      if (document.querySelector(UISelectors.noRecords)) {
+        document.querySelector(UISelectors.noRecords).remove();
+      }
+      let input = document.querySelector(UISelectors.searchInput);
+      const output = `Sorry, no records match for: ${input.value.toLocaleLowerCase()}`
+      let h2 = document.createElement('h2');
+      h2.className = 'no-records'
+      h2.innerHTML = output
+      if (input.value !== '') {
+        document.querySelector(UISelectors.studentList).appendChild(h2);
+      }
+      if (input.value === '' || filtered.length > 0) {
+
+      }
     }
   }
 })();
