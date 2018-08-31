@@ -185,9 +185,6 @@ const UICtrl = (() => {
       if (input.value !== '') {
         document.querySelector(UISelectors.studentList).appendChild(h2);
       }
-      if (input.value === '' || filtered.length > 0) {
-
-      }
     }
   }
 })();
