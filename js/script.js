@@ -123,6 +123,8 @@ const UICtrl = (() => {
             }
             listItem[i].classList.add('show');
             listItem[i].style.display = 'block';
+            let highlightLetters = searchList[i].textContent.replace(input.value.toLowerCase(), `<span class="highlight">${input.value.toLowerCase()}</span>`);
+            searchList[i].innerHTML = highlightLetters;
           } else {
             if (listItem[i].classList.contains('show')) {
               listItem[i].classList.remove('show');
