@@ -74,6 +74,7 @@ const UICtrl = (() => {
 
 
       for (let i = 0; i < pagesNeeded; i++) {
+        // Show pagination links if pages needed is greater then 1
         if (pagesNeeded > 1) {
           let anchor = `<a href="#">${i + 1}</a>`
           let li = document.createElement('li');
