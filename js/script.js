@@ -20,6 +20,7 @@ const UICtrl = (() => {
     searchButton: '.student-search button',
     noRecords: '.no-records'
   }
+  // You can adjust recordsPerPage
   const UIConfig = {
     recordsPerPage: 10,
     currentPage: 1
